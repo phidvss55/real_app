@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="MessDetector">
+    <phpmd_settings>
+      <MessDetectorConfiguration tool_path="E:/project/php/base-source/vendor/bin/phpmd" timeout="30000" />
+    </phpmd_settings>
+  </component>
+  <component name="PhpCodeSniffer">
+    <phpcs_settings>
+      <PhpCSConfiguration standards="MySource;PEAR;PSR1;PSR2;Squiz;Zend" tool_path="E:/project/php/base-source/vendor/bin/phpcs" timeout="30000" />
+    </phpcs_settings>
+  </component>
+  <component name="PhpDebugGeneral" xdebug_debug_port="9001" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
+  <component name="PhpRuntimeConfiguration">
+    <extensions>
+      <extension name="Parle" enabled="true" />
+      <extension name="mapscript" enabled="true" />
+      <extension name="solr" enabled="true" />
+      <extension name="sync" enabled="true" />
+      <extension name="yaf" enabled="true" />
+    </extensions>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP 7.2" />
+</project>
