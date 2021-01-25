@@ -16,7 +16,8 @@ router.post('/register', async (req, res) => {
 		if (userCheck.length != 0) return res.status(400).send('User already registerd');
 
 		const salt = await bcrypt.genSalt(10);
-		register.password = bcrypt.hash(register.password, salt);
+		register.password = await bcrypt.hash(register.password, salt);
+		console.log(register)
 		let user = await appDatabaseManager.doRegister(register);
 
 		console.log(user.id);
