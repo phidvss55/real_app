@@ -1,9 +1,10 @@
 const express = require('express');
 const app = express();
 
-const user = require('./routes/users')
 const database = require('./manager/database');
 const variable = require('./manager/variable');
+const user = require('./routes/users')
+const basket = require('./routes/baskets')
 
 const con = new database({
 	host: variable.HOST,
