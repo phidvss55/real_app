@@ -74,8 +74,9 @@ class AppDatabaseManager {
 
 	updateProductBasket(basketId) {
 		return db.query(
-
-		)
+			"UPDATE baskets SET qty = ?, price = ? WHERE id = ? AND user_id = ?",
+			[basket.qty, basket.price, basket.id, basket.user_id]
+		).then(rows => { return rows })
 	}
 
 	deleteProductFromBasket(basketId, userId) {

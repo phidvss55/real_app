@@ -1,6 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const router = express.Router();
+const auth = require('../middleware/a')
+
 const AppDatabaseManager = require('../manager/appDatabaseManager');
 const appDatabaseManager = new AppDatabaseManager();
 
@@ -41,8 +43,8 @@ router.post('/login', async (req, res) => {
 		if (!validPassword)
 			return res.status(400).send('Invalid username or password');
 
+		login.id = userInfo[0].id; //user id
 		res.status(400).send({
-
 			token: await login.generateAuthToken(login)
 		});
 	} catch(error) {
