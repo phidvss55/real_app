@@ -5,6 +5,7 @@ const AppDatabaseManager = require('../manager/appDatabaseManager');
 const appDatabaseManager = new AppDatabaseManager();
 
 var Register = require('../model/Register');
+var Login = require('../model/Login');
 
 router.post('/register', async (req, res) => {
 	try {
@@ -20,12 +21,32 @@ router.post('/register', async (req, res) => {
 		console.log(register)
 		let user = await appDatabaseManager.doRegister(register);
 
-		console.log(user.id);
-		console.log(user);
-
 		res.status(200).json(user);
 	} catch(error) {
 		res.status(400).send(error);
+	}
+})
+
+router.post('/login', async (req, res) => {
+	try {
+		var login = new Login(req.body);
+		const { error } = login.validateLogin(login);
+		if (error) return res.status(400).send({ message: error.details[0].message })
+
+		const userInfo = await appDatabaseManager.fetchUserByUsername(login.username);
+		if(userInfo.length == 0)
+			return res.status(400).send("Invalid username or password");
+
+		const validPassword = bcrypt.compare(login.password, userInfo[0].password);
+		if (!validPassword)
+			return res.status(400).send('Invalid username or password');
+
+		res.status(400).send({
+
+			token: await login.generateAuthToken(login)
+		});
+	} catch(error) {
+		return res.status(400).json(error);
 	}
 })
 

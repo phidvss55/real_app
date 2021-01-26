@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const user = require('./routes/user')
+const user = require('./routes/users')
 const database = require('./manager/database');
 const variable = require('./manager/variable');
 

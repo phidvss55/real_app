@@ -1,0 +1,5 @@
+{
+  "name": "Build Real App",
+  "jwtPrivateKey": "123456",
+  "expireIn": "24h"
+}
