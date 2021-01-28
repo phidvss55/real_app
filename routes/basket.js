@@ -40,7 +40,7 @@ router.put('/', auth, async (req, res) => {
     try {
         var basket = new Basket(req.body);
         const { error } = basket.validateBasket(basket);    
-        if(error) return res.status(400).send(error.details[0].message);
+        if(error) return res.status(400).send({ message: error.details[0].message });
 
         basket.user_id = req.user._id;
         res.status(200).send(await appDatabaseManager.updateProductBasket(basket));
