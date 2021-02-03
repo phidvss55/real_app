@@ -21,7 +21,7 @@ global.db = con;
 
 app.use(express.json())
 app.use("/api/user", user);
-app.use("/api/basket", basket);
+app.use("/api", basket);
 app.use("/api/order", order);
 app.use("/api/product", product);
 app.use("/api/category", category);
