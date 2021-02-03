@@ -93,7 +93,7 @@ class AppDatabaseManager {
 	//#region Order
 	fetchOrders(userId) {
 		return db.query(
-		"SELECT * FROM users WHERE id = ?", [userId]
+		"SELECT * FROM orders WHERE id = ?", [userId]
 		).then(rows => {
 			return rows;
 		});
@@ -107,9 +107,10 @@ class AppDatabaseManager {
 	}
 
 	saveOrder(order) {
+		let today = new Date();
 		return db.query(
-			"INSERT INTO orders (user_id, is_paid, is_printed) VALUES (?, ?, ?)",
-			[order.user_id, true, false]
+			"INSERT INTO orders (order_date, user_id, is_paid, is_printed) VALUES (?, ?, ?, ?)",
+			[today, order.user_id, true, false]
 		).then(rows => { return rows.insertId });
 	}
 

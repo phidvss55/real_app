@@ -16,14 +16,17 @@ const con = new database({
 	database: variable.DATABASE,
 	port: variable.PORT_DB,
 });
+const prefix = variable.PREFIX;
 
 global.db = con;
 
 app.use(express.json())
-app.use("/api/user", user);
-app.use("/api", basket);
-app.use("/api/order", order);
-app.use("/api/product", product);
+app.use(prefix, user);
+app.use(prefix, basket);
+app.use(prefix, order);
+
+app.use(prefix, product);
+
 app.use("/api/category", category);
 
 app.listen(variable.PORT, () => console.log('Server is running in port ' + variable.PORT));
