@@ -38,7 +38,7 @@ class AppDatabaseManager {
 
 	fetchBasketCount(userId) {
 		return db.query(
-		"SELECT sum(qty) as BasketCount" +
+		"SELECT sum(qty) as BasketCount " +
 			"FROM baskets " +
 			"WHERE user_id = ?", [userId]
 		).then(rows => {
@@ -56,7 +56,7 @@ class AppDatabaseManager {
 	async insertProductInBasket(basket) {
 		const productInBasket = await this.fetchProductFromBasket(basket.product_id, basket.user_id);
 
-		if (productInBasket) {
+		if (productInBasket && productInBasket.length != 0) {
 			let basketId = productInBasket[0].id;
 			let qty = productInBasket[0].qty + basket.qty;
 			let price = productInBasket[0].price + basket.price;
@@ -93,7 +93,7 @@ class AppDatabaseManager {
 	//#region Order
 	fetchOrders(userId) {
 		return db.query(
-		"SELECT * FROM users WHERE id = ?", [userId]
+		"SELECT * FROM orders WHERE id = ?", [userId]
 		).then(rows => {
 			return rows;
 		});
@@ -107,9 +107,10 @@ class AppDatabaseManager {
 	}
 
 	saveOrder(order) {
+		let today = new Date();
 		return db.query(
-			"INSERT INTO orders (user_id, is_paid, is_printed) VALUES (?, ?, ?)",
-			[order.user_id, true, false]
+			"INSERT INTO orders (order_date, user_id, is_paid, is_printed) VALUES (?, ?, ?, ?)",
+			[today, order.user_id, true, false]
 		).then(rows => { return rows.insertId });
 	}
 

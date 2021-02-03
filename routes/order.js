@@ -7,9 +7,14 @@ var Order = require('../model/Order');
 
 const appDatabaseManager = new AppDatabaseManager();
 
-router.get('/', auth, async (req, res) => {
+router.get('/orders', auth, async (req, res) => {
 	try {
-		res.status(200).send(await appDatabaseManager.fetchOrders(req.user._id));
+		let rows = await appDatabaseManager.fetchOrders(req.user._id);
+		if (rows) {
+			res.status(200).send({ "success": true, "message": "Found data", "data": rows});
+		}
+
+		res.status(200).send({ "succes": false, "message": "Error occurs in excute time. " });
 	} catch (err) {
 		res.status(400).send({ message: err });
 	}
@@ -17,13 +22,17 @@ router.get('/', auth, async (req, res) => {
 
 router.get('/order-details/:orderId', auth, async (req, res) => {
 	try {
-		res.status(200).send(await appDatabaseManager.fetchOrderDetails(req.params.orderId));
+		let result = await appDatabaseManager.fetchOrderDetails(req.params.orderId);
+		if (result && result.length != 0) {
+			res.status(200).send({ "success": true, "data": result });
+		}
+		res.status(200).send({ "success": true, "data": "empty" });
 	} catch (err) {
 		res.status(400).send({ message: err });
 	}
 });
 
-router.post('/', auth, async (req, res) => {
+router.post('/orders', auth, async (req, res) => {
 	try {
 		let order = new Order(req.body);
 		let transactionId = "Card";
