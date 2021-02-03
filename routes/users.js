@@ -1,6 +1,8 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
 const router = express.Router();
+const auth = require('../middleware/AuthRequest')
+
 const AppDatabaseManager = require('../manager/appDatabaseManager');
 const appDatabaseManager = new AppDatabaseManager();
 
@@ -35,14 +37,14 @@ router.post('/login', async (req, res) => {
 
 		const userInfo = await appDatabaseManager.fetchUserByUsername(login.username);
 		if(userInfo.length == 0)
-			return res.status(400).send("Invalid username or password");
+			return res.status(400).send({ message: "Invalid username or password" });
 
-		const validPassword = bcrypt.compare(login.password, userInfo[0].password);
+		const validPassword = await bcrypt.compare(login.password, userInfo[0].password);
 		if (!validPassword)
-			return res.status(400).send('Invalid username or password');
+			return res.status(400).send({ message: 'Invalid username or password' });
 
-		res.status(400).send({
-
+		login.id = userInfo[0].id; //user id	 
+		res.status(200).send({
 			token: await login.generateAuthToken(login)
 		});
 	} catch(error) {

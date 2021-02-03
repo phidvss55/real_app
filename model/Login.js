@@ -24,6 +24,8 @@ Login.prototype.generateAuthToken = function(login) {
 	config.get('jwtPrivateKey'),{
 		expiresIn: config.get('expireIn')
 	});
+
+	return token;
 }
 
 module.exports = Login;

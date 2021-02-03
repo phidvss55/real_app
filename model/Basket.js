@@ -18,20 +18,4 @@ Basket.prototype.validateBasket = function(basket) {
 	return Joi.validate(basket, schema);
 }
 
-Basket.prototype.onCall = function(basket) {
-	var basket = {
-		id: basket.id,
-		product_id: basket.product_id,
-		user_id: basket.user_id,
-		qty: basket.qty,
-		price: basket.price
-	}
-
-	if (basket.length == 2) {
-		return res.status(400).json('Invalid format for this site');
-	}
-
-	return basket.tostring();
-}
-
 module.exports = Basket;
