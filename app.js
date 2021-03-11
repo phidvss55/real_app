@@ -1,5 +1,9 @@
 const express = require('express');
 const app = express();
+const path = require('path');
+
+app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'views'));
 
 const database = require('./manager/database');
 const variable = require('./manager/variable');
@@ -19,6 +23,10 @@ const con = new database({
 const prefix = variable.PREFIX;
 
 global.db = con;
+
+app.get('/', function (req, res) {
+    res.render('index');
+});
 
 app.use(express.json())
 app.use(prefix, user);
